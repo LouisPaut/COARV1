@@ -6,6 +6,8 @@ public class deplacement : MonoBehaviour
 {
     public float speed = 1.0f;
     public Rigidbody rb;
+    public bool isJumping = false;
+    public float timeBeforeJump = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,13 +44,31 @@ public class deplacement : MonoBehaviour
         }
         if (Input.GetKeyDown("space"))
         {
-            gameObject.transform.position = new Vector3(0, 5, 0) + gameObject.transform.position;
+            Jump();
         }
         if (Input.GetKey("r"))
         {
             gameObject.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
         }
+        if (isJumping)
+        {
+            timeBeforeJump -= Time.deltaTime;
+            if (timeBeforeJump < 0)
+            {
+                isJumping = false;
+            }
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z);
+        }
         //gameObject.GetComponent<Transform>().Translate(20f * Vector3.forward);
+    }
+
+    public void Jump()
+    {
+        if (!isJumping)
+        {
+            isJumping = true;
+            timeBeforeJump = 0.5f;
+        }
     }
 }
 
