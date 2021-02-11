@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class porte : MonoBehaviour
 {
+    private bool ouvert = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +18,15 @@ public class porte : MonoBehaviour
 
         if (Input.GetKeyDown("e"))
         {
-            gameObject.GetComponent<Transform>().Rotate(90f * Vector3.up);
+            if (ouvert)
+            {
+                gameObject.GetComponent<Transform>().Rotate(-90f * Vector3.up);
+            }
+            else
+            {
+                gameObject.GetComponent<Transform>().Rotate(90f * Vector3.up);
+            }
+            ouvert = !ouvert;
         }
 
     }
